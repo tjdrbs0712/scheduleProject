@@ -39,4 +39,19 @@ public class ScheduleController {
         return scheduleService.createSchedule(requestDto);
     }
 
+    //일정 수정
+    @PutMapping("/schedules/{id}/{password}/{title}/{contents}/{manager}")
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id,
+                                              @PathVariable String title,@PathVariable String contents,
+                                              @PathVariable String manager,@PathVariable String password){
+        ScheduleRequesDto requestDto = new ScheduleRequesDto(title, contents, manager, password);
+        return scheduleService.updateSchedule(id, password, requestDto);
+    }
+
+    //일정 삭제
+    @DeleteMapping("/schedules/{id}/{password}")
+    public void deleteSchedule(@PathVariable Long id, @PathVariable String password){
+        scheduleService.deleteSchedule(id, password);
+    }
+
 }

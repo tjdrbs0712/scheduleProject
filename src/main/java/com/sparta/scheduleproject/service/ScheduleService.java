@@ -6,6 +6,7 @@ import com.sparta.scheduleproject.entity.Schedule;
 import com.sparta.scheduleproject.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,25 @@ public class ScheduleService {
     public ScheduleResponseDto getSchedulesId(Long id) {
         return scheduleRepository.findById(id)
                         .map(ScheduleResponseDto::new)
-                        .orElseThrow(() -> new IllegalArgumentException("해당 id에 맞는 일정이 없습니다."));
+                        .orElseThrow(() -> new IllegalArgumentException("해당 ID에 맞는 일정이 없습니다."));
+    }
+
+    @Transactional
+    public ScheduleResponseDto updateSchedule(Long id, String password, ScheduleRequesDto requestDto) {
+
+        Schedule schedule = findSchedule(id, password);
+        schedule.update(requestDto);
+        return new ScheduleResponseDto(schedule);
+    }
+
+    @Transactional
+    public void deleteSchedule(Long id, String password) {
+        Schedule schedule = findSchedule(id, password);
+        scheduleRepository.delete(schedule);
+    }
+
+    private Schedule findSchedule(Long id, String password){
+        return scheduleRepository.findByIdAndPassword(id, password)
+                .orElseThrow(() -> new IllegalArgumentException("ID 또는 PASSWORD가 틀렸습니다."));
     }
 }

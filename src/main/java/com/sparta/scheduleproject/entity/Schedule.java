@@ -31,11 +31,16 @@ public class Schedule extends Timestamped{
     private String password;
 
 
-    public Schedule(ScheduleRequesDto requesDto){
-        this.title = requesDto.getTitle();
-        this.contents = requesDto.getContents();
-        this.manager = requesDto.getManager();
-        this.password = requesDto.getPassword();
+    public Schedule(ScheduleRequesDto requestDto){
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.manager = requestDto.getManager();
+        this.password = requestDto.getPassword();
     }
 
+    public void update(ScheduleRequesDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.manager = requestDto.getManager();
+    }
 }
