@@ -1,6 +1,7 @@
 package com.sparta.scheduleproject.entity;
 
 
+import com.sparta.scheduleproject.dto.ScheduleRequesDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,13 @@ public class Schedule extends Timestamped{
     private String manager;
     @Column(name="password", nullable = false, length = 30)
     private String password;
+
+
+    public Schedule(ScheduleRequesDto requesDto){
+        this.title = requesDto.getTitle();
+        this.contents = requesDto.getContents();
+        this.manager = requesDto.getManager();
+        this.password = requesDto.getPassword();
+    }
+
 }
