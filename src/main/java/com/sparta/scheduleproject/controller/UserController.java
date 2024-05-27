@@ -35,4 +35,5 @@ public class UserController {
 
         return "회원가입 완료";
     }
+
 }

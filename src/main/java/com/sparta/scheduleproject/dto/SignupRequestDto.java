@@ -20,4 +20,7 @@ public class SignupRequestDto {
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "패스워드는 알파벳 대소문자(a~z, A~Z)와 숫자(0~9)로만 구성되어야 합니다.")
     private String password;
 
+    private boolean admin = false;
+    private String adminToken = "";
+
 }
