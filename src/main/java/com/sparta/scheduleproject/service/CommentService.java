@@ -20,7 +20,9 @@ public class CommentService {
 
     // 댓글 작성
     @Transactional
-    public CommentResponseDto createComment(Long scheduleId, CommentRequestDto commentRequestDto, User user) {
+    public CommentResponseDto createComment(CommentRequestDto commentRequestDto, User user) {
+
+        Long scheduleId = commentRequestDto.getScheduleId();
 
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
@@ -28,5 +30,23 @@ public class CommentService {
         Comment comment = commentRepository.save(new Comment(commentRequestDto, user, schedule));
 
         return new CommentResponseDto(comment);
+    }
+
+    @Transactional
+    public CommentResponseDto updateComment(Long commentId, CommentRequestDto commentRequestDto, User user) {
+
+            Schedule schedule = scheduleRepository.findById(commentRequestDto.getScheduleId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
+
+            Comment comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+
+            if (!comment.getUser().getId().equals(user.getId())) {
+                throw new IllegalArgumentException("해당 댓글을 수정할 권한이 없습니다.");
+            }
+
+            comment.update(commentRequestDto);
+
+            return new CommentResponseDto(comment);
     }
 }
