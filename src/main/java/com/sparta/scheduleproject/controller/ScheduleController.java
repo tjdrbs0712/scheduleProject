@@ -1,6 +1,6 @@
 package com.sparta.scheduleproject.controller;
 
-import com.sparta.scheduleproject.dto.ScheduleRequesDto;
+import com.sparta.scheduleproject.dto.ScheduleRequestDto;
 import com.sparta.scheduleproject.dto.ScheduleResponseDto;
 import com.sparta.scheduleproject.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +32,15 @@ public class ScheduleController {
     }
 
     //일정 추가
-    @PostMapping("/schedules/{title}/{contents}/{manager}/{password}")
-    public ScheduleResponseDto createSchedule(@PathVariable String title, @PathVariable String contents,
-            @PathVariable String manager, @PathVariable String password){
-        ScheduleRequesDto requestDto = new ScheduleRequesDto(title, contents, manager, password);
+    @PostMapping("/schedules")
+    public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto){
         return scheduleService.createSchedule(requestDto);
     }
 
     //일정 수정
-    @PutMapping("/schedules/{id}/{password}/{title}/{contents}/{manager}")
-    public ScheduleResponseDto updateSchedule(@PathVariable Long id,
-                                              @PathVariable String title,@PathVariable String contents,
-                                              @PathVariable String manager,@PathVariable String password){
-        ScheduleRequesDto requestDto = new ScheduleRequesDto(title, contents, manager, password);
-        return scheduleService.updateSchedule(id, password, requestDto);
+    @PutMapping("/schedules/{id}")
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
+        return scheduleService.updateSchedule(id, requestDto);
     }
 
     //일정 삭제

@@ -16,3 +16,6 @@ public abstract class Timestamped {
     @Temporal(TemporalType.DATE)
     private LocalDate createdAt;
 }
+
+
+

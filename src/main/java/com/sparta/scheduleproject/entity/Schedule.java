@@ -1,15 +1,14 @@
 package com.sparta.scheduleproject.entity;
 
 
-import com.sparta.scheduleproject.dto.ScheduleRequesDto;
+import com.sparta.scheduleproject.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,15 +29,25 @@ public class Schedule extends Timestamped{
     @Column(name="password", nullable = false, length = 30)
     private String password;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
 
-    public Schedule(ScheduleRequesDto requestDto){
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
+    private List<Comment> commentList = new ArrayList<>();
+
+
+
+
+
+    public Schedule(ScheduleRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
         this.password = requestDto.getPassword();
     }
 
-    public void update(ScheduleRequesDto requestDto) {
+    public void update(ScheduleRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
