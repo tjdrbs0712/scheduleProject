@@ -3,8 +3,9 @@ API 명세서 링크: https://documenter.getpostman.com/view/34878014/2sA3JT2Hj5
 ER다이어그램
 
 
+![scheduleProjectER다이어그램](https://github.com/tjdrbs0712/scheduleProject/assets/102494118/81db0257-d6d2-415f-8d76-e0829e851e5c)
 
-![scheduleProjectER다이어그램](https://github.com/tjdrbs0712/scheduleProject/assets/102494118/36ef6490-c012-4cd2-85af-f7ef0ce110a3)
+
 
 클래스다이어그램
 
