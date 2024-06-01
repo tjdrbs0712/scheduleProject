@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity
                 .status(400)
-                .body("message: " + e.getMessage());
+                .body(e.getMessage());
     }
 
 }

@@ -1,9 +1,13 @@
 package com.sparta.scheduleproject.controller;
 
 import com.sparta.scheduleproject.dto.SignupRequestDto;
+import com.sparta.scheduleproject.entity.User;
+import com.sparta.scheduleproject.responseEntity.UserResponse;
 import com.sparta.scheduleproject.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,18 +26,23 @@ public class UserController {
 
     //회원가입
     @PostMapping("/signup")
-    public String signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity<UserResponse> signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if(!fieldErrors.isEmpty()) {
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                System.out.println(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
-            }
-            return "회원가입 실패";
+        
+        if(bindingResult.hasErrors()){
+            bindingResult.getFieldErrors().forEach((fieldError ->
+                    System.out.println(fieldError.getField() + "필드: " + fieldError.getDefaultMessage())));
+
+            return ResponseEntity.badRequest().body(UserResponse.builder()
+                    .msg("회원가입 실패")
+                    .build());
         }
 
         userService.signup(requestDto);
 
-        return "회원가입 완료";
+        return ResponseEntity.ok().body(UserResponse.builder()
+                .msg("회원가입 성공")
+                .build());
     }
 
 }
