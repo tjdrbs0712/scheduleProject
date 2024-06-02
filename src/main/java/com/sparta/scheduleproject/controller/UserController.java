@@ -40,7 +40,7 @@ public class UserController {
 
         userService.signup(requestDto);
 
-        return ResponseEntity.ok().body(UserResponse.builder()
+        return ResponseEntity.ok(UserResponse.builder()
                 .msg("회원가입 성공")
                 .build());
     }

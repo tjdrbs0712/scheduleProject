@@ -35,10 +35,10 @@ public class CommentController {
                     .build());
         }
 
-        return ResponseEntity.ok().body(CommentResponse.builder()
-                        .msg("댓글 작성 완료")
-                        .data(commentService.createComment(commentRequestDto, userDetails.getUser()))
-                        .build());
+        return ResponseEntity.ok(CommentResponse.builder()
+                .msg("댓글 작성 완료")
+                .data(commentService.createComment(commentRequestDto, userDetails.getUser()))
+                .build());
     }
 
     //댓글 수정
@@ -58,7 +58,7 @@ public class CommentController {
                     .build());
         }
 
-        return ResponseEntity.ok().body(CommentResponse.builder()
+        return ResponseEntity.ok(CommentResponse.builder()
                 .msg("댓글 수정 완료")
                 .data(commentService.updateComment(commentId, commentRequestDto, userDetails.getUser()))
                 .build());
@@ -71,8 +71,9 @@ public class CommentController {
             , @AuthenticationPrincipal UserDetailsImpl userDetails){
         commentService.deleteComment(commentId, userDetails.getUser());
 
-        return ResponseEntity.ok().body(CommentResponse.builder()
+        return ResponseEntity.ok(CommentResponse.builder()
                 .msg("댓글 삭제 완료")
                 .build());
     }
+
 }
